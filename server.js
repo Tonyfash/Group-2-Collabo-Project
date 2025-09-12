@@ -9,7 +9,7 @@ const app = express();
 const db = process.env.DB_URI
 
 app.use(express.json());
-app.use(userRouter)
+app.use('/api/v1', userRouter)
 
 
 mongoose.connect(db).then(()=>{

@@ -45,7 +45,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await userModel.find();
@@ -62,8 +61,6 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-
-
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params
@@ -74,7 +71,6 @@ exports.getUser = async (req, res) => {
         message: `User with the ID: ${id} not found`
       })
     }
-
     res.status(200).json({
       message: `User with the ID: ${id} found`,
       data: user
@@ -84,8 +80,30 @@ exports.getUser = async (req, res) => {
       error: error.message
     })
   }
-}
-
+};
+exports.updateUser = async (req, res) => {
+  try {
+    const {id: _id} = req.params;
+    const {userName, email, phoneNumber, gender} = req.body;
+    const user = await userModel.findById(_id);
+    if(!user){
+      res.status(404).json({
+        message: `User with ${_id} not found`
+      })
+    } else {
+      let data = {userName, email, phoneNumber, gender}
+      const updatedUser = await userModel.findByIdAndUpdate(_id, data, {new: true});
+      res.status(200).json({
+        message: `User updated successfully`,
+        data: updatedUser
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      error: error.message
+    })
+  }
+};
 
 exports.clearDb = async (req, res) => {
   try {
@@ -104,8 +122,6 @@ exports.clearDb = async (req, res) => {
     })
   }
 };
-
-
 
 exports.deleteAuser = async (req, res) => {
   try {
