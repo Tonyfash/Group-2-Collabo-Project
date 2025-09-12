@@ -1,4 +1,4 @@
-const { createUser, getUser, getAllUsers, clearDb, deleteAuser } = require('../controller/user');
+const { createUser, getUser, getAllUsers, clearDb, deleteAuser, updateUser } = require('../controller/user');
 
 const router = require('express').Router();
 
@@ -12,5 +12,6 @@ router.delete('/user', clearDb);
 
 router.delete('/user/:id', deleteAuser);
 
+router.put('/user/id', updateUser);
 
 module.exports = router
